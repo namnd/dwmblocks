@@ -1,5 +1,6 @@
 #!/bin/sh
 
+read -r capacity </sys/class/power_supply/BAT0/capacity
 read -r rate </sys/class/power_supply/BAT0/current_now
 [ "$rate" = 0 ] && notify-send "Battery fully charged" && exit
 
@@ -35,7 +36,7 @@ case $hr in
         case $mn in
             0) notify-send "$hr hours remaining" ;;
             1) notify-send "$hr hours, 1 minute remaining" ;;
-            *) notify-send "$hr hours, $mn minutes remaining" ;;
+            *) notify-send "$capacity% ($hr hours, $mn minutes remaining)" ;;
         esac
         ;;
 esac
